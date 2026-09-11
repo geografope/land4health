@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{extract_ee_with_progress}
 \alias{extract_ee_with_progress}
-\title{Extract Earth Engine data with a progress bar}
+\title{Extract Earth Engine data with a cli progress bar}
 \usage{
 extract_ee_with_progress(
   image,
@@ -36,6 +36,6 @@ extract_ee_with_progress(
 An \code{sf} or  \code{data.frame} object.
 }
 \description{
-Extract Earth Engine data with a progress bar
+Extract Earth Engine data with a cli progress bar
 }
 \keyword{internal}

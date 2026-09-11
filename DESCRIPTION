@@ -18,13 +18,11 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports: 
     cli,
-    progress,
     lifecycle,
     tidyr,
     dplyr,
     rgee (<= 1.1.7), 
     sf,
-    glue,
     httr2,
     ows4R,
     reticulate,

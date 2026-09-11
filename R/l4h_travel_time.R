@@ -158,7 +158,7 @@ l4h_travel_time <- function(region, destination = "cities", transport_mode = "al
       fun = fun,
       scale = 1000,
       sf = TRUE,
-      quiet = FALSE,
+      quiet = quiet,
       lazy = FALSE
     )
   } else {
@@ -167,7 +167,8 @@ l4h_travel_time <- function(region, destination = "cities", transport_mode = "al
       sf_region = region,
       fun = fun,
       scale = 1000,
-      sf = FALSE
+      sf = FALSE,
+      quiet = quiet
     )
   }
 

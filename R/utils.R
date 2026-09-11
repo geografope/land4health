@@ -81,7 +81,7 @@ split_sf <- function(sf_region) {
 }
 
 
-#' Extract Earth Engine data with a progress bar
+#' Extract Earth Engine data with a cli progress bar
 #' @param image An Earth Engine Image object (from `rgee`).
 #' @param sf_region An `sf` object containing regions to extract.
 #' @param scale Numeric. Scale in meters for extraction.
@@ -104,20 +104,18 @@ extract_ee_with_progress <- function(
 ) {
   geoms <- split_sf(sf_region)
 
-  # Por defecto, no hace nada
+  # By default, do nothing so quiet extraction has no progress side effects.
   tick <- function() {}
 
-  if (!quiet) {
-    pb <- progress::progress_bar$new(
-      format     = "\033[32mExtracting data\033[0m \033[34m[:bar]\033[0m :percent | :current/:total | ETA: :eta",
-      total      = length(geoms),
-      clear      = FALSE,
-      width      = 50,
-      complete   = "=",
-      incomplete = "-"
+  if (!quiet && length(geoms) > 0L) {
+    progress_id <- cli::cli_progress_bar(
+      format = "Extracting data {cli::pb_bar} {cli::pb_percent} | {cli::pb_current}/{cli::pb_total} | ETA: {cli::pb_eta}",
+      total = length(geoms),
+      clear = FALSE,
+      .auto_close = FALSE
     )
-    # Ahora tick avanza la barra
-    tick <- function() pb$tick()
+    on.exit(cli::cli_progress_done(id = progress_id), add = TRUE)
+    tick <- function() cli::cli_progress_update(id = progress_id, inc = 1)
   }
 
   if (inherits(sf_region, "sf")) {
@@ -271,4 +269,3 @@ as_geojson_min <- function(x) {
   # Devuelve un string GeoJSON (sirve como validación/serialización)
   geojsonio::geojson_json(x)
 }
-
